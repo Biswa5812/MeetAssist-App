@@ -1,0 +1,131 @@
+/* Login Page CSS */
+.page{
+  background-color: black;
+  height: 100vh;
+}
+.headin{
+  padding: auto;
+  padding-top: 75px;
+  text-align: center;
+  color: white;
+  
+}
+
+.App{
+  background-color: #86bc25;
+  border: 2px solid #d3d3d3;
+  border-radius: .5rem;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 125px;
+  padding: 1em;
+  text-align: center;
+  width: 600px;
+}
+
+.form{
+  padding: 1em;
+}
+
+Label{
+  font-weight: 600;
+}
+/* -------------------------------------------------------------- */
+
+/* Footer CSS */
+.foot{
+  display: flex;
+  justify-content: center;
+  background-color: black;
+  color: white;
+  height: 25px;
+  width: 100%;
+}
+
+/* -------------------------------------------------------------- */
+
+/* Header CSS */
+
+.head{
+  background-color: black;
+  border: white;
+}
+
+.company{
+  color: white;
+}
+
+.options{
+  stroke: white;
+  border: 1px solid white;
+  /* background-color: transparent;
+  background-image: none;
+  border: 1px solid transparent; */
+  /* color: white; */
+}
+
+.NavItem{
+  color: white;
+}
+
+.NavItem:hover{
+  color: #87bb28;
+  cursor: pointer;
+}
+
+img{
+  margin-left: 3px;
+  margin-right:3px;
+  height: 27px;
+}
+
+/* -------------------------------------------------------------- */
+
+
+
+
+
+
+/* .App {
+  text-align: center;
+} */
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.dp{
+  margin-bottom: 20px;
+  margin-left: 20px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
