@@ -1,8 +1,8 @@
 const config = {
     user: 'ProjectDeloitte',
     password: 'meeting',
-    server: 'USCHNBISARAN1',
-    database: 'MeetAssist',
+    server: 'USHYDSHOTRIP06',
+    database: 'Hackcollab',
     options: {
         trustServerCertificate: true,
         trustedConnection: true,

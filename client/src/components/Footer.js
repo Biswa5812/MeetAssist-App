@@ -6,7 +6,7 @@ const Footer = () =>
     return(
         <div className="navbar fixed-bottom">
             <div className="foot">
-            <a>2022 Meet Assist. All Rights Reserved</a>
+            <a>2022 D-Collabhub. All Rights Reserved</a>
             </div>
         </div>
     )

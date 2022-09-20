@@ -18,15 +18,16 @@ app.use(cors())
 app.post('/auth',(req,res) => {
     let email = req.body.email;
     let pass = req.body.pass;
+    console.log(email,pass);
     dbOperation.authEmployees(email,pass).then(resp =>{
         let data = resp.recordset[0];
         if(resp.recordset.length)
         {
             console.log(data.Designaion);
             res.send(JSON.stringify({
-                "designation": data.Designaion,
-                "username": data.EmployeeName,
-                "userid":data.EmployeeID
+                "designation": data.EmpDesignation,
+                "username": data.EmpName,
+                "userid":data.EmpID
             }))
             // res.redirect(200,'http://localhost:3000/employeemenu');
         }
@@ -40,19 +41,20 @@ app.post('/auth',(req,res) => {
     })  
 })
 
-app.get('/roomlist',(req,res) => {
-    dbOperation.getRoomList().then(resp => {
+app.get('/projectlist',(req,res) => {
+    dbOperation.getProjectList().then(resp => {
         let data = resp.recordset;
+        console.log(data);
         if(data.length)
         {
             res.send(JSON.stringify({
-                "rooms":data
+                "projects":data
             }))
         }
         else
         {
             res.send(JSON.stringify({
-                "rooms":0
+                "projects":0
             }))
         }
     })

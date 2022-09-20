@@ -5,7 +5,7 @@ const Booking = require('./booking');
 const getEmployees = async() => {
     try{
         let pool = await sql.connect(config);
-        let employees = pool.request().query("select * from EmployeeTable");
+        let employees = pool.request().query("select * from Employee");
         console.log(employees);
         return employees;
     }
@@ -14,23 +14,23 @@ const getEmployees = async() => {
     }
 }
 
-const createEmployees = async(Employee) => {
-    try{
-        let pool = await sql.connect(config);
-        let employees = pool.request()
-        .query(`insert into EmployeeTable values ('${Employee.EmployeeID}', '${Employee.EmployeeName}', '${Employee.EmployeeMail}', '${Employee.Designation}', HASHBYTES('sha2_512','${Employee.EmpPassword}'))`);
-        return employees;
-    }
-    catch(error){
-        console.log(error)
-    }
-}
+// const createEmployees = async(Employee) => {
+//     try{
+//         let pool = await sql.connect(config);
+//         let employees = pool.request()
+//         .query(`insert into Employee values ('${Employee.EmployeeID}', '${Employee.EmployeeName}', '${Employee.EmployeeMail}', '${Employee.Designation}', HASHBYTES('sha2_512','${Employee.EmpPassword}'))`);
+//         return employees;
+//     }
+//     catch(error){
+//         console.log(error)
+//     }
+// }
 
 const authEmployees = async(email,pass) => {
     try{
         let pool = await sql.connect(config);
         let employees = pool.request()
-        .query(`select * from EmployeeTable where EmployeeMail='${email}' and EmpPassword=HASHBYTES('sha2_512','${pass}')`);
+        .query(`select * from Employee where EmpEmail='${email}' and EmpPassword=HASHBYTES('sha2_512','${pass}')`);
         console.log(employees);
         return employees;
     }
@@ -39,12 +39,12 @@ const authEmployees = async(email,pass) => {
     }
 }
 
-const getRoomList = async() => {
+const getProjectList = async() => {
     try{
         let pool = await sql.connect(config);
-        let roomlist = pool.request().query("select * from FloorTable");
-        console.log(roomlist);
-        return roomlist;
+        let projectList = pool.request().query("select * from Project");
+        console.log(projectList);
+        return projectList;
     }
     catch(error)
     {
@@ -57,7 +57,7 @@ const checkRoom = async(meet_date,startTime,endTime) => {
         console.log(endTime);
         let pool = await sql.connect(config);
         let checkList = pool.request()
-        .query("select * from BookingTable");
+        .query("select * from Project");
         // console.log((await checkList).recordset);
         return checkList;
     }
@@ -67,67 +67,64 @@ const checkRoom = async(meet_date,startTime,endTime) => {
     }
 }
 
-const makeBooking = async(Booking) => {
-    try{
-        let pool = await sql.connect(config);
-        let bookconfirm = pool.request()
-        .query(`insert into BookingTable values ('${Booking.RoomID}', '${Booking.EmployeeID}', '${Booking.BookDate}', '${Booking.BookStartTime}', '${Booking.BookEndTime}', '${Booking.BookStatus}')`)
-        return bookconfirm;
-    }
-    catch(error)
-    {
-        console.log(error);
-    }
-}
+// const makeBooking = async(Booking) => {
+//     try{
+//         let pool = await sql.connect(config);
+//         let bookconfirm = pool.request()
+//         .query(`insert into Project values ('${Booking.RoomID}', '${Booking.EmployeeID}', '${Booking.BookDate}', '${Booking.BookStartTime}', '${Booking.BookEndTime}', '${Booking.BookStatus}')`)
+//         return bookconfirm;
+//     }
+//     catch(error)
+//     {
+//         console.log(error);
+//     }
+// }
 
-const userBookings = async(uid) => {
-    try{
-        let pool = await sql.connect(config);
-        let userlisting = pool.request()
-        .query(`select b.BookDate,b.BookStartTime,b.BookEndTime,b.BookStatus,f.RoomName,f.Capacity from BookingTable b, FloorTable f where b.EmployeeID='${uid}' and f.RoomID=b.RoomID`)
-        return userlisting;
-    }
-    catch(error)
-    {
-        console.log(error);
-    }
-}
+// const userBookings = async(uid) => {
+//     try{
+//         let pool = await sql.connect(config);
+//         let userlisting = pool.request()
+//         .query(`select b.BookDate,b.BookStartTime,b.BookEndTime,b.BookStatus,f.RoomName,f.Capacity from Project b, FloorTable f where b.EmployeeID='${uid}' and f.RoomID=b.RoomID`)
+//         return userlisting;
+//     }
+//     catch(error)
+//     {
+//         console.log(error);
+//     }
+// }
 
 
-const cancelbook = async(id,date,start,end) => {
-    try{
-        let pool = await sql.connect(config);
-        let cancelres = pool.request()
-        .query(`delete from BookingTable where EmployeeID='${id}' and BookDate='${date}' and BookStartTime='${start}' and BookEndTime='${end}'`)
-        return cancelres;
-    }
-    catch(error)
-    {
-        console.log(error);
-    }
-}
+// const cancelbook = async(id,date,start,end) => {
+//     try{
+//         let pool = await sql.connect(config);
+//         let cancelres = pool.request()
+//         .query(`delete from Project where EmployeeID='${id}' and BookDate='${date}' and BookStartTime='${start}' and BookEndTime='${end}'`)
+//         return cancelres;
+//     }
+//     catch(error)
+//     {
+//         console.log(error);
+//     }
+// }
 
-const olddata = async() => {
-    try{
-        let pool = await sql.connect(config);
-        let deleteold = pool.request()
-        .query(`delete from BookingTable where BookDate<'${new Date().toISOString()}'`)
-        return 1;
-    }
-    catch(error)
-    {
-        console.log(error);
-    }
-}
+// const olddata = async() => {
+//     try{
+//         let pool = await sql.connect(config);
+//         let deleteold = pool.request()
+//         .query(`delete from Project where BookDate<'${new Date().toISOString()}'`)
+//         return 1;
+//     }
+//     catch(error)
+//     {
+//         console.log(error);
+//     }
+// }
 
 module.exports = {
-    createEmployees,
+
     getEmployees,
     authEmployees,
-    getRoomList,
     checkRoom,
-    makeBooking,
-    userBookings,
-    cancelbook,
-    olddata,
+    getProjectList
+ 
 }

@@ -1,12 +1,10 @@
-class Booking{
-    constructor(RoomID, EmployeeID, BookDate, BookStartTime, BookEndTime, BookStatus){
-        this.RoomID = RoomID;
-        this.EmployeeID = EmployeeID;
-        this.BookDate = BookDate;
-        this.BookStartTime = BookStartTime;
-        this.BookEndTime = BookEndTime
-        this.BookStatus = BookStatus
+class Project{
+    constructor(ProjID, ProjName, ProjDescription, ProjTechStack){
+        this.ProjID = ProjID;
+        this.ProjName = ProjName;
+        this.ProjDescription = ProjDescription;
+        this.ProjTechStack = ProjTechStack;
     }
 }
 
-module.exports = Booking;
+module.exports = Project;

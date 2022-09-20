@@ -9,7 +9,9 @@ import {
     Card,
     CardBody,
     CardTitle,
-    CardSubtitle
+    CardSubtitle,
+    CardText,
+    CardLink
 } from 'reactstrap';
 import TextField from '@mui/material/TextField';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
@@ -18,9 +20,11 @@ import DatePicker from '@mui/lab/DatePicker';
 import TimePicker from '@mui/lab/TimePicker';
 import Grid from '@mui/material/Grid';
 
+// import Project from "../../../server/dbFiles/booking";
+
 const EmployeeMenu = () => 
 {
-    const [rooms, setRooms] = useState([])
+    const [projects,setProjects] = useState([])
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [locPreference, setLocPreference] = useState("")
     const [date, setDate] = useState(null);
@@ -32,9 +36,9 @@ const EmployeeMenu = () =>
     const username = JSON.parse(user);
 
     useEffect(() =>{
-        fetch("http://localhost:5000/roomlist")
+        fetch("http://localhost:5000/projectlist")
             .then(res => res.json())
-            .then(json => setRooms(json.rooms))
+            .then(json => setProjects(json.projects))
     },[])
 
 
@@ -45,39 +49,74 @@ const EmployeeMenu = () =>
         setLocPreference(value);
     }
 
-    const checkingStatus = async() => {
-        let res = await fetch("http://localhost:5000/bookingHist", {
-            method: "POST",
-            headers: {
-                'Accept':'application/json',
-                'Content-Type':'application/json'
-            },
-            body: JSON.stringify({
-                meet_date: date.toISOString().split('T')[0],
-                startTime: startTime.toLocaleTimeString('it-IT'),
-                endTime: endTime.toLocaleTimeString('it-IT'),
-            })
-        });
+    // const checkingStatus = async() => {
+    //     let res = await fetch("http://localhost:5000/bookingHist", {
+    //         method: "POST",
+    //         headers: {
+    //             'Accept':'application/json',
+    //             'Content-Type':'application/json'
+    //         },
+    //         body: JSON.stringify({
+    //             meet_date: date.toISOString().split('T')[0],
+    //             startTime: startTime.toLocaleTimeString('it-IT'),
+    //             endTime: endTime.toLocaleTimeString('it-IT'),
+    //         })
+    //     });
 
-        let reply = await res.json();;
-        let da = reply.roomStatus;
-        setRoomStatus(da);
-    }
+    //     let reply = await res.json();;
+    //     let da = reply.roomStatus;
+    //     setRoomStatus(da);
+    // }
 
 
     return(
         <div>
-            <h1>Hello, {username}!!</h1>
-            <Dropdown isOpen={dropdownOpen} toggle={toggle} className="dp">
-                <DropdownToggle caret>Select Location</DropdownToggle>
-                <DropdownMenu >
-                    <DropdownItem onClick={handleLocation} >Hyderabad</DropdownItem>
-                    <DropdownItem onClick={handleLocation} >Mumbai</DropdownItem>
-                    <DropdownItem onClick={handleLocation} >Gurgaon</DropdownItem>
-                    <DropdownItem onClick={handleLocation} >Bangalore</DropdownItem>
-                    <DropdownItem onClick={handleLocation} >View All</DropdownItem>
-                </DropdownMenu>
-            </Dropdown>
+            <h1>Hello, {username}!</h1>
+            <h2>Welcome to DHUB</h2>
+
+             <div style={{display:'flex'}}>
+                {
+                    projects.map(project => {
+                        return(
+                            <div key={project.ProjID} style={{marginRight:'10px'}}>
+                                <Card style={{
+                                    width: '20rem',
+                                    height: '15rem'
+                                 }} >
+                                    <CardBody>
+                                        <CardTitle tag="h5">
+                                        {project.ProjName}
+                                        </CardTitle>
+                                        <CardSubtitle
+                                        className="mb-2 text-muted"
+                                        tag="h6"
+                                        >
+                                        {project.ProjTechStack}
+                                        </CardSubtitle>
+                                    </CardBody>
+
+                                    <CardBody>
+                                        <CardText>
+                                        {(project.ProjDescription)}
+                                        </CardText>
+                                        <CardLink href="#">
+                                        Staging Env
+                                        </CardLink>
+                                        <CardLink href="#">
+                                         Production
+                                        </CardLink>
+                                    </CardBody>
+                                </Card>
+        
+                        </div>
+                           
+                            )}
+                        )
+                
+                
+                }
+            </div> 
+  {/*  
             <Grid container>
                 <LocalizationProvider dateAdapter={AdapterDateFns} >
                     <DatePicker
@@ -127,7 +166,7 @@ const EmployeeMenu = () =>
                                         <CardTitle>{room.RoomName}</CardTitle>
                                         <CardSubtitle>Floor Number - {room.FloorNumber}, {room.RoomLocation}</CardSubtitle>
                                         <p>Capacity: {(room.Capacity)-1} - {room.Capacity}</p>
-                                        {/* <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText> */}
+                                         <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText> 
                                         <Button onClick={event =>  window.location.href=`/booking/data=${room.RoomID}/${date.toISOString().split('T')[0]}/time=${startTime.toLocaleTimeString('it-IT')}/end=${endTime.toLocaleTimeString('it-IT')}/room=${room.RoomName}`}>Book</Button>
                                     </CardBody>
                                 </Card>
@@ -143,7 +182,7 @@ const EmployeeMenu = () =>
                                         <CardTitle>{room.RoomName}</CardTitle>
                                         <CardSubtitle>Floor Number - {room.FloorNumber}, {room.RoomLocation}</CardSubtitle>
                                         <p>Capacity: {(room.Capacity)-1} - {room.Capacity}</p>
-                                        {/* <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText> */}
+                                         <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText> 
                                         <Button onClick={event =>  window.location.href=`/booking/data=${room.RoomID}/${date.toISOString().split('T')[0]}/time=${startTime.toLocaleTimeString('it-IT')}/end=${endTime.toLocaleTimeString('it-IT')}/room=${room.RoomName}`}>Book</Button>
                                     </CardBody>
                                 </Card>
@@ -158,7 +197,7 @@ const EmployeeMenu = () =>
                                     <CardTitle>{room.RoomName}</CardTitle>
                                     <CardSubtitle>Floor Number - {room.FloorNumber}, {room.RoomLocation}</CardSubtitle>
                                     <p>Capacity: {(room.Capacity)-1} - {room.Capacity}</p>
-                                    {/* <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText> */}
+                                    <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText> 
                                     <Button onClick={event =>  window.location.href=`/booking/data=${room.RoomID}/${date.toISOString().split('T')[0]}/time=${startTime.toLocaleTimeString('it-IT')}/end=${endTime.toLocaleTimeString('it-IT')}/room=${room.RoomName}`}>Book</Button>
                                 </CardBody>
                             </Card>
@@ -173,7 +212,7 @@ const EmployeeMenu = () =>
                                         <CardTitle>{room.RoomName}</CardTitle>
                                         <CardSubtitle>Floor Number - {room.FloorNumber}, {room.RoomLocation}</CardSubtitle>
                                         <p>Capacity: {(room.Capacity)-1} - {room.Capacity}</p>
-                                        {/* <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText> */}
+                                         <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText> 
                                         <Button onClick={event =>  window.location.href=`/booking/data=${room.RoomID}/${date.toISOString().split('T')[0]}/time=${startTime.toLocaleTimeString('it-IT')}/end=${endTime.toLocaleTimeString('it-IT')}/room=${room.RoomName}`}>Book</Button>
                                     </CardBody>
                                 </Card>
@@ -182,6 +221,7 @@ const EmployeeMenu = () =>
                     })
                 ) )}
             </div>
+            */}
         </div>
     )
 }

@@ -43,7 +43,7 @@ const Login = ({setToken,setType,setUser,setUseId}) =>
 
     return(
         <div className="page">
-            <h1 className='headin'>MeetAssist</h1>
+            <h1 className='headin'>D-Collabhub</h1>
             <div className="main">
                 <Form onSubmit={handleSubmit} className='App'>
                     <h2 className='text-center'>SIGN IN</h2>

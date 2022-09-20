@@ -1,9 +1,9 @@
 class Employee{
-    constructor(EmployeeID, EmployeeName, EmployeeMail, Designation, EmpPassword){
-        this.EmployeeID = EmployeeID;
-        this.EmployeeName = EmployeeName;
-        this.EmployeeMail = EmployeeMail;
-        this.Designation = Designation;
+    constructor(EmpID, EmpName, EmpDesignation, EmpEmail, EmpPassword){
+        this.EmpID = EmpID;
+        this.EmpName = EmpName;
+        this.EmpDesignation = EmpDesignation;
+        this.EmpEmail = EmpEmail;
         this.EmpPassword = EmpPassword
     }
 }
